@@ -1,0 +1,94 @@
+:DCS
+"BBBBBBBBBBBBBBBBB5555555BBBBBBBBB5555555BBBBBBBBB55BBB55BBBBBBBBB55BBB55BBBBBBBBB55BBB55BBBBBBBBB5555555BBBBBBBBB5555555BBB5BBBBBBBBBBBBBBB5BBBBBBBBBBBBBB555BBBBBBBBBBB5555555BBBBBBBBBBB555BBBBBBBBBBBBBB5BBBBBBBBBBBBBBB5BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB"
+SetUpEditor ⌊PLSCH
+0→X
+0→Y
+0→S
+0→T
+"^ S=Score,T=Time,X and Y=Player X and Y pos
+randInt(­15,15)→A
+randInt(­9,7)→B
+"^ Plus pos
+Lbl PC
+Menu("Welcome to PlusChase","Play",P,"Settings",ST,"Quit",QT)
+Lbl ST
+Menu("PlusChase settings","Color",CL,"Time",T,"Back",PC
+Lbl T
+1→θ
+"^ θ:to check if time is set
+Input "Time: ",T
+ClrHome
+Goto PC
+"^ Back to main menu
+Lbl CL
+Input "Line and text color (10-24): ",V
+Input "Player and plus color (10-24): ",J
+ClrHome
+Goto PC
+Lbl P
+AxesOff
+ZStandard
+ZSquare
+BorderColor 2
+BackgroundOn WHITE
+"^ Graph screen settings
+If V<10 or V>24:10→V
+If J<10 or J>24:10→J
+If θ≠1:500→T
+Horizontal 8,V
+TextColor(V
+Repeat K=45 or T=0
+getKey→K
+T-1→T
+If A=X and B=Y:Then
+S+1→S
+Pt-Off(A,B,3
+randInt(­15,15)→A
+randInt(­9,7)→B
+End
+If K=26:Then
+Pt-Off(X,Y,2
+X+1→X
+End
+If K=24:Then
+Pt-Off(X,Y,2
+X-1→X
+End
+If K=25:Then
+Pt-Off(X,Y,2
+Y+1→Y
+End
+If K=34:Then
+Pt-Off(X,Y,2
+Y-1→Y
+End
+If Y≥7:7→Y
+If Y≤­9:­9→Y
+If X≥15:15→X
+If X≤­15:­15→X
+If T<100:Text(1,120,"
+If T<10:Text(1,112,"
+Pt-On(X,Y,2,J
+Pt-On(A,B,3,J
+Text(1,1,"Score:",S
+Text(1,70,"Time:",T
+End
+ClrDraw
+TextColor(GREEN
+Text(-1,40,60,"Your score:",S
+Text(-1,70,60,"High score:",⌊PLSCH(1)
+If S>⌊PLSCH(1):Then
+S→⌊PLSCH(1)
+For(C,10,24
+TextColor(C
+Text(-1,100,45,"New high score!"
+End
+End
+Pause 
+Goto PC
+"^ Back to main menu
+Lbl QT
+Archive ⌊PLSCH
+ClrHome
+Disp "PlusChase by KMisthebomb
+Disp "kota.m.mitchell@gmail.com
