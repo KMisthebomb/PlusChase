@@ -5,6 +5,8 @@ SetUpEditor ⌊PLSCH
 0→Y
 0→S
 0→T
+0→J
+0→V
 "^ S=Score,T=Time,X and Y=Player X and Y pos
 randInt(­15,15)→A
 randInt(­9,7)→B
