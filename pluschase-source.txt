@@ -1,75 +1,90 @@
+// Icon for Cesium
 :DCS
 "BBBBBBBBBBBBBBBBB5555555BBBBBBBBB5555555BBBBBBBBB55BBB55BBBBBBBBB55BBB55BBBBBBBBB55BBB55BBBBBBBBB5555555BBBBBBBBB5555555BBB5BBBBBBBBBBBBBBB5BBBBBBBBBBBBBB555BBBBBBBBBBB5555555BBBBBBBBBBB555BBBBBBBBBBBBBB5BBBBBBBBBBBBBBB5BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB"
-SetUpEditor ⌊PLSCH
-0→X
-0→Y
-0→S
-0→T
-0→J
-0→V
-"^ S=Score,T=Time,X and Y=Player X and Y pos
-randInt(­15,15)→A
-randInt(­9,7)→B
-"^ Plus pos
+// Set up/create high score list
+SetUpEditor ⸤PLSCH
+// Declare variables
+0→X // Player X pos
+0→Y // Player Y pos
+0→S // Score
+0→T // Time
+0→θ // Time check variable (see lines 21 and 41)
+0→J // Line & text color
+0→V // Player & plus color
+0→A // Plus X pos
+0→B // Plus Y pos
+randInt(⁻15,15)→A 
+randInt(⁻9,7)→B
 Lbl PC
 Menu("Welcome to PlusChase","Play",P,"Settings",ST,"Quit",QT)
 Lbl ST
 Menu("PlusChase settings","Color",CL,"Time",T,"Back",PC
 Lbl T
-1→θ
-"^ θ:to check if time is set
+1→θ // For checking if the time is set (used at line 41)
 Input "Time: ",T
 ClrHome
-Goto PC
-"^ Back to main menu
+Goto PC // Go to the main menu
 Lbl CL
 Input "Line and text color (10-24): ",V
 Input "Player and plus color (10-24): ",J
 ClrHome
 Goto PC
 Lbl P
+// Set up graph screen for playability
 AxesOff
 ZStandard
 ZSquare
 BorderColor 2
 BackgroundOn WHITE
-"^ Graph screen settings
+// Make sure colors numbers aren't invalid values
 If V<10 or V>24:10→V
 If J<10 or J>24:10→J
+// If time isn't set, make it 500
 If θ≠1:500→T
+// Draw the bar & set text color
 Horizontal 8,V
 TextColor(V
+// Main loop
 Repeat K=45 or T=0
 getKey→K
-T-1→T
+T-1→T // Decrease time
+// If the player touches the plus
 If A=X and B=Y:Then
 S+1→S
 Pt-Off(A,B,3
-randInt(­15,15)→A
-randInt(­9,7)→B
+// Set a new X and Y pos for the plus
+randInt(⁻15,15)→A
+randInt(⁻9,7)→B
 End
+// If key [right] is pressed
 If K=26:Then
 Pt-Off(X,Y,2
 X+1→X
 End
+// If key [left] is pressed
 If K=24:Then
 Pt-Off(X,Y,2
 X-1→X
 End
+// If key [up] is pressed
 If K=25:Then
 Pt-Off(X,Y,2
 Y+1→Y
 End
+// If key [down] is pressed
 If K=34:Then
 Pt-Off(X,Y,2
 Y-1→Y
 End
+// Player boundaries
 If Y≥7:7→Y
-If Y≤­9:­9→Y
+If Y≤⁻9:⁻9→Y
 If X≥15:15→X
-If X≤­15:­15→X
-If T<100:Text(1,120,"
-If T<10:Text(1,112,"
+If X≤⁻15:⁻15→X
+// Erase leftovers on screen to prevent it from looking werid
+If T<100:Text(1,120,"  
+If T<10:Text(1,112,"  
+// Draw player, plus, time, and score
 Pt-On(X,Y,2,J
 Pt-On(A,B,3,J
 Text(1,1,"Score:",S
@@ -77,9 +92,12 @@ Text(1,70,"Time:",T
 End
 ClrDraw
 TextColor(GREEN
+// Display high score and current score
 Text(-1,40,60,"Your score:",S
-Text(-1,70,60,"High score:",⌊PLSCH(1)
-If S>⌊PLSCH(1):Then
+Text(-1,70,60,"High score:",⸤PLSCH(1)
+// If your score is higher than the high score
+If S>⸤PLSCH(1):Then
+// Store your score to the high score
 S→⌊PLSCH(1)
 For(C,10,24
 TextColor(C
@@ -87,10 +105,11 @@ Text(-1,100,45,"New high score!"
 End
 End
 Pause 
+// Return to main menu
 Goto PC
-"^ Back to main menu
 Lbl QT
-Archive ⌊PLSCH
+// Put list in archive to keep it safe from RAM clears
+Archive ⸤PLSCH
 ClrHome
 Disp "PlusChase by KMisthebomb
-Disp "kota.m.mitchell@gmail.com
+Disp "Thanks for playing!
